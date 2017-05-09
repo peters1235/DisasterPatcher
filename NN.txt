@@ -1,0 +1,17 @@
+ClosestFacilityAnalysis closetAnalysis = new ClosestFacilityAnalysis();
+            closetAnalysis.MaxSnapDistance = 1000.0;
+            closetAnalysis.Workspace = InPara.BusinessWS;
+            closetAnalysis.NetworkFeatureDataset = "TraDataset";
+            closetAnalysis.NetworkDatasetName = "TraDataset_ND";
+            closetAnalysis.ImpedanceAttributeName = "Length";
+            IFeatureClass facilityFC = Geoway.ADF.GIS.Utility.VectorDataOperator.OpenFeatureClass(ws, "temp");
+            closetAnalysis.SetFacilitiesFC(facilityFC, null);
+ closetAnalysis.FacilityNameField = "NAME";
+
+            closetAnalysis.IncidentNameField = "NAME";
+            closetAnalysis.SetIncidentsFC(CalcFeatureClass, CalcFeatureClassFilter);
+
+            int idxpac = CalcFeatureClass.FindField("PAC");
+
+            IGPMessages gpMsg = new GPMessagesClass();
+            ITable result = closetAnalysis.Solve(ref gpMsg);
