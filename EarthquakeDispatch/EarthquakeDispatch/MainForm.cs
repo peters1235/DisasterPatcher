@@ -12,6 +12,7 @@ using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Controls;
 using ESRI.ArcGIS.ADF;
 using ESRI.ArcGIS.SystemUI;
+using DisasterModel;
 
 namespace EarthquakeDispatch
 {
@@ -130,6 +131,25 @@ namespace EarthquakeDispatch
             _errorExport.InitWord(loc);
             _errorExport.WriteWord();
             _errorExport.Finish();
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Dispatcher dispatcher = new Dispatcher();
+            dispatcher.Setup();
+            dispatcher.Dispatch();
+            ShowResults(dispatcher);
+        }
+
+        private void ShowResults(Dispatcher dispatcher)
+        {
+            axMapControl1.Map = dispatcher.GetMap();
+        }
+
+        private void testLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Dispatcher dispatcher = new Dispatcher();
+
         }
     }
 }

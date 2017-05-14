@@ -10,5 +10,7 @@ namespace DisasterModel
         public double Water { get; set; }
         public double Food { get; set; }
         public double Tents { get; set; }
+
+        public int ID { get; set; }
     }
 }

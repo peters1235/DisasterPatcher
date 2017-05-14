@@ -113,7 +113,7 @@ namespace EarthquakeDispatch
             }
             catch (Exception ex)
             {
-                 
+                throw ex;
             }
         }
 

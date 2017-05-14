@@ -13,15 +13,26 @@ namespace DisasterModel
     /// </summary>
     public class RegionCoefficient
     {
+        public static string CoeField = "地区系数";
         private IFeatureClass _fcRegion = null;
-        public void SetClass(IFeatureClass fc)
+        private IFeatureClass _class;
+
+        public RegionCoefficient(IFeatureClass iFeatureClass)
         {
-            _fcRegion = fc;
+            this._fcRegion = iFeatureClass;
         }
 
         public double GetRegionCoefficient(IPoint pt)
         {
-            return 0;
+            ISpatialFilter filter = new SpatialFilterClass();
+            filter.Geometry = pt;
+            filter.SpatialRel = esriSpatialRelEnum.esriSpatialRelWithin;
+
+            IFeatureCursor cursor = _fcRegion.Search(filter, true);
+            IFeature f = cursor.NextFeature();
+            int idxCoe = _fcRegion.FindField(CoeField);
+            double coeff = double.Parse(f.get_Value(idxCoe).ToString());
+            return coeff;
         }
     }
 }
