@@ -1,36 +1,25 @@
-2017-05-14 14:43:21,635 [9] error1 helloWorld
-2017-05-14 14:43:21,651 [9] info1 helloworld
-2017-05-14 14:43:21,651 [9] System.Exception: ex hellowolrd
-2017-05-14 14:43:21,653 [9] System.Exception: ex hellowolrd
-2017-05-14 14:52:22,691 error1 helloWorld
-2017-05-14 14:52:22,708 info1 helloworld
-2017-05-14 14:52:22,708 System.Exception: ex hellowolrd
-2017-05-14 14:52:22,710 System.Exception: ex hellowolrd
-2017-05-14 14:52:23,530 没有足够的水资源
-2017-05-14 14:52:23,534 没有足够的水资源
-2017-05-14 14:52:23,538 没有足够的水资源
-2017-05-14 14:52:23,541 没有足够的水资源
-2017-05-14 14:52:50,825 error1 helloWorld
-2017-05-14 14:52:50,839 info1 helloworld
-2017-05-14 14:52:50,839 System.Exception: ex hellowolrd
-2017-05-14 14:52:50,841 System.Exception: ex hellowolrd
-2017-05-14 14:53:01,079 没有足够的水资源
-2017-05-14 14:53:01,080 没有足够的水资源
-2017-05-14 14:53:01,081 没有足够的水资源
-2017-05-14 14:53:01,082 没有足够的水资源
-2017-05-14 14:56:25,146 error1 helloWorld
-2017-05-14 14:56:25,159 info1 helloworld
-2017-05-14 14:56:25,159 System.Exception: ex hellowolrd
-2017-05-14 14:56:25,161 System.Exception: ex hellowolrd
-2017-05-14 14:56:35,259 没有足够的水资源
-2017-05-14 14:56:35,260 没有足够的水资源
-2017-05-14 14:56:35,261 没有足够的水资源
-2017-05-14 14:56:35,262 没有足够的水资源
-2017-05-14 15:01:52,928 error1 helloWorld
-2017-05-14 15:01:52,967 info1 helloworld
-2017-05-14 15:01:52,967 System.Exception: ex hellowolrd
-2017-05-14 15:01:52,973 System.Exception: ex hellowolrd
-2017-05-14 15:02:03,824 没有足够的水资源
-2017-05-14 15:02:03,827 没有足够的水资源
-2017-05-14 15:02:03,828 没有足够的水资源
-2017-05-14 15:02:03,829 没有足够的水资源
+2017-05-14 19:19:49,906 System.IO.IOException: 文件“配送方案.doc”正由另一进程使用，因此该进程无法访问此文件。
+   在 System.IO.Directory.DeleteHelper(String fullPath, String userPath, Boolean recursive, Boolean throwOnTopLevelDirectoryNotFound)
+   在 System.IO.Directory.Delete(String fullPath, String userPath, Boolean recursive, Boolean checkHost)
+   在 System.IO.Directory.Delete(String path, Boolean recursive)
+   在 DisasterModel.Dispatcher.SetupOutputDirectory()
+2017-05-14 19:20:03,990 System.IO.IOException: 文件“配送方案.doc”正由另一进程使用，因此该进程无法访问此文件。
+   在 System.IO.Directory.DeleteHelper(String fullPath, String userPath, Boolean recursive, Boolean throwOnTopLevelDirectoryNotFound)
+   在 System.IO.Directory.Delete(String fullPath, String userPath, Boolean recursive, Boolean checkHost)
+   在 System.IO.Directory.Delete(String path, Boolean recursive)
+   在 DisasterModel.Dispatcher.SetupOutputDirectory()
+2017-05-14 19:26:02,257 System.IO.IOException: 文件“result.ldb”正由另一进程使用，因此该进程无法访问此文件。
+   在 System.IO.Directory.DeleteHelper(String fullPath, String userPath, Boolean recursive, Boolean throwOnTopLevelDirectoryNotFound)
+   在 System.IO.Directory.Delete(String fullPath, String userPath, Boolean recursive, Boolean checkHost)
+   在 System.IO.Directory.Delete(String path, Boolean recursive)
+   在 DisasterModel.Dispatcher.SetupOutputDirectory() 位置 F:\17\private\Disaster\Earthquake\EarthquakeDispatch\DisasterModel\Dispatcher.cs:行号 67
+2017-05-14 19:29:24,438 System.IO.DirectoryNotFoundException: 未能找到路径“F:\17\private\Disaster\Data\output\result.mdb”的一部分。
+   在 System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   在 System.IO.File.InternalCopy(String sourceFileName, String destFileName, Boolean overwrite, Boolean checkHost)
+   在 System.IO.File.Copy(String sourceFileName, String destFileName)
+   在 DisasterModel.Dispatcher.SetupOutputDirectory() 位置 F:\17\private\Disaster\Earthquake\EarthquakeDispatch\DisasterModel\Dispatcher.cs:行号 74
+2017-05-14 19:55:21,542 System.IO.IOException: 文件“result.ldb”正由另一进程使用，因此该进程无法访问此文件。
+   在 System.IO.Directory.DeleteHelper(String fullPath, String userPath, Boolean recursive, Boolean throwOnTopLevelDirectoryNotFound)
+   在 System.IO.Directory.Delete(String fullPath, String userPath, Boolean recursive, Boolean checkHost)
+   在 System.IO.Directory.Delete(String path, Boolean recursive)
+   在 DisasterModel.Dispatcher.SetupOutputDirectory() 位置 F:\17\private\Disaster\Earthquake\EarthquakeDispatch\DisasterModel\Dispatcher.cs:行号 67

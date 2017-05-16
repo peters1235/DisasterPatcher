@@ -61,38 +61,47 @@ namespace DisasterModel.Properties {
         }
         
         /// <summary>
-        ///   查找类似 result.mxd 的本地化字符串。
+        ///   查找类似 配送方案.doc 的本地化字符串。
         /// </summary>
-        internal static string MapDocName {
+        internal static string DocName {
             get {
-                return ResourceManager.GetString("MapDocName", resourceCulture);
+                return ResourceManager.GetString("DocName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 配送方案.doc 的本地化字符串。
+        ///   查找类似 配送方案.jpg 的本地化字符串。
         /// </summary>
-        internal static string ReportDocName {
+        internal static string ImgName {
             get {
-                return ResourceManager.GetString("ReportDocName", resourceCulture);
+                return ResourceManager.GetString("ImgName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 result.mdb 的本地化字符串。
         /// </summary>
-        internal static string ResultDBName {
+        internal static string MDBName {
             get {
-                return ResourceManager.GetString("ResultDBName", resourceCulture);
+                return ResourceManager.GetString("MDBName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 result.mxd 的本地化字符串。
+        /// </summary>
+        internal static string MxdName {
+            get {
+                return ResourceManager.GetString("MxdName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Routes 的本地化字符串。
         /// </summary>
-        internal static string ResultFeatureClass {
+        internal static string RoutesClassName {
             get {
-                return ResourceManager.GetString("ResultFeatureClass", resourceCulture);
+                return ResourceManager.GetString("RoutesClassName", resourceCulture);
             }
         }
     }

@@ -6,7 +6,7 @@ using Microsoft.Office.Interop.Word;
 using System.Collections;
 using System.Runtime.InteropServices;
 
-namespace EarthquakeDispatch
+namespace DisasterModel
 {
     class WordOperation
     {

@@ -15,19 +15,25 @@ namespace DisasterModel
         private RoadNetwork _roadNetwork;
         private IFeatureClass _outputFC;
 
-        private void SupplyTents(RefugeeSite site)
+        List<SupplyRoute> _siteWaterRoutes = new List<SupplyRoute>();
+
+        public List<SupplyRoute> WaterRoutes
+        {
+            get { return _siteWaterRoutes; }
+        }
+
+        public void SupplyTents(RefugeeSite site)
         {
             
         }
 
-        private void SupplyFood(RefugeeSite site)
+        public void SupplyFood(RefugeeSite site)
         {
            
         }
 
-        private void SupplyWater(RefugeeSite site)
+        public void SupplyWater(RefugeeSite site)
         {
-            List<SupplyRoute> siteWaterRoutes = new List<SupplyRoute>();
             do
             {
                 IFeatureClass facilityClass = _repositoryCol.FeatureClass;
@@ -61,24 +67,29 @@ namespace DisasterModel
                 _refugeSiteCol.ReplenishWater(site, waterAmount);
 
                 route.SetMessagePara("饮用水", waterAmount, "L");
-                InsertFeature(route);
-                siteWaterRoutes.Add(route);
+                route.IncidentID = site.OID ;
+
+                AddRouteFeature(route);
+                _siteWaterRoutes.Add(route);
             }
             while (site.WaterInNeed > 0);
         }
 
-        private void InsertFeature(SupplyRoute route)
+        private void AddRouteFeature(SupplyRoute route)
         {
             int idxResource = this._outputFC.FindField(SupplyRoute.ResourceField);
             int idxAmount = this._outputFC.FindField(SupplyRoute.AmountField);
             int idxUnit = this._outputFC.FindField(SupplyRoute.UnitField);
             int idxRepoID = this._outputFC.FindField(SupplyRoute.RepoIDField);
+            int idxIncidentID = this._outputFC.FindField(SupplyRoute.IncidentIDField);
 
             IFeature f = _outputFC.CreateFeature();
             f.set_Value(idxAmount,route.Amount);
             f.set_Value(idxResource, route.Resource);
             f.set_Value(idxUnit, route.Unit);
             f.set_Value(idxRepoID, route.RepoID);
+            f.set_Value(idxIncidentID, route.IncidentID);
+
             f.Shape = route.Route;
 
             f.Store();

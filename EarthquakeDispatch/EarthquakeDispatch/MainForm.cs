@@ -124,32 +124,42 @@ namespace EarthquakeDispatch
             statusBarXY.Text = string.Format("{0}, {1}  {2}", e.mapX.ToString("#######.##"), e.mapY.ToString("#######.##"), axMapControl1.MapUnits.ToString().Substring(4));
         }
 
-        private void wordToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            IExportToWord _errorExport = new ExportToWord();
-            string loc = @"E:\16\Private\A.doc";
-            _errorExport.InitWord(loc);
-            _errorExport.WriteWord();
-            _errorExport.Finish();
-        }
-
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Dispatcher dispatcher = new Dispatcher();
-            dispatcher.Setup();
-            dispatcher.Dispatch();
-            ShowResults(dispatcher);
+            //Dispatcher dispatcher = new Dispatcher();
+            //if (dispatcher.Setup())
+            //{
+            //    dispatcher.Dispatch();
+            //    ShowResults(dispatcher);
+            //    dispatcher.CreateReport(axMapControl1.ActiveView);
+            //}
+          
         }
 
         private void ShowResults(Dispatcher dispatcher)
         {
             axMapControl1.Map = dispatcher.GetMap();
+            axMapControl1.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null,
+                axMapControl1.ActiveView.Extent);
+
+            axMapControl1.ActiveView.Extent.Expand(1.1, 1.1, true);
+
+            axMapControl1.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGraphics,null,null);
+
         }
 
-        private void testLogToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 饮用水供给ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Dispatcher dispatcher = new Dispatcher();
-
+            FormDispatchInput input = new FormDispatchInput();
+            if (input.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                IFeatureLayer fl = new FeatureLayerClass();
+                
+                Dispatcher dispatcher = input.Dispatcher;
+                axMapControl1.Map = dispatcher.GetMap();
+            }
         }
+
+      
     }
 }

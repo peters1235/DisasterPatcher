@@ -42,8 +42,11 @@ namespace EarthquakeDispatch
             this.menuSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.menuExitApp = new System.Windows.Forms.ToolStripMenuItem();
-            this.wordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.饮用水供给ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.方便食品供给ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.救灾帐篷供给ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.测试导出报告ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.axMapControl1 = new ESRI.ArcGIS.Controls.AxMapControl();
             this.axToolbarControl1 = new ESRI.ArcGIS.Controls.AxToolbarControl();
             this.axTOCControl1 = new ESRI.ArcGIS.Controls.AxTOCControl();
@@ -51,7 +54,6 @@ namespace EarthquakeDispatch
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusBarXY = new System.Windows.Forms.ToolStripStatusLabel();
-            this.testLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMapControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axToolbarControl1)).BeginInit();
@@ -64,9 +66,8 @@ namespace EarthquakeDispatch
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuFile,
-            this.wordToolStripMenuItem,
             this.testToolStripMenuItem,
-            this.testLogToolStripMenuItem});
+            this.测试导出报告ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(859, 25);
@@ -132,19 +133,41 @@ namespace EarthquakeDispatch
             this.menuExitApp.Text = "Exit";
             this.menuExitApp.Click += new System.EventHandler(this.menuExitApp_Click);
             // 
-            // wordToolStripMenuItem
-            // 
-            this.wordToolStripMenuItem.Name = "wordToolStripMenuItem";
-            this.wordToolStripMenuItem.Size = new System.Drawing.Size(53, 21);
-            this.wordToolStripMenuItem.Text = "Word";
-            this.wordToolStripMenuItem.Click += new System.EventHandler(this.wordToolStripMenuItem_Click);
-            // 
             // testToolStripMenuItem
             // 
+            this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.饮用水供给ToolStripMenuItem,
+            this.方便食品供给ToolStripMenuItem,
+            this.救灾帐篷供给ToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.testToolStripMenuItem.Text = "Test";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(92, 21);
+            this.testToolStripMenuItem.Text = "计算物资供应";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
+            // 
+            // 饮用水供给ToolStripMenuItem
+            // 
+            this.饮用水供给ToolStripMenuItem.Name = "饮用水供给ToolStripMenuItem";
+            this.饮用水供给ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.饮用水供给ToolStripMenuItem.Text = "饮用水供给";
+            this.饮用水供给ToolStripMenuItem.Click += new System.EventHandler(this.饮用水供给ToolStripMenuItem_Click);
+            // 
+            // 方便食品供给ToolStripMenuItem
+            // 
+            this.方便食品供给ToolStripMenuItem.Name = "方便食品供给ToolStripMenuItem";
+            this.方便食品供给ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.方便食品供给ToolStripMenuItem.Text = "方便食品供给";
+            // 
+            // 救灾帐篷供给ToolStripMenuItem
+            // 
+            this.救灾帐篷供给ToolStripMenuItem.Name = "救灾帐篷供给ToolStripMenuItem";
+            this.救灾帐篷供给ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.救灾帐篷供给ToolStripMenuItem.Text = "救灾帐篷供给";
+            // 
+            // 测试导出报告ToolStripMenuItem
+            // 
+            this.测试导出报告ToolStripMenuItem.Name = "测试导出报告ToolStripMenuItem";
+            this.测试导出报告ToolStripMenuItem.Size = new System.Drawing.Size(92, 21);
+            this.测试导出报告ToolStripMenuItem.Text = "导出配送报告";
             // 
             // axMapControl1
             // 
@@ -211,13 +234,6 @@ namespace EarthquakeDispatch
             this.statusBarXY.Size = new System.Drawing.Size(57, 17);
             this.statusBarXY.Text = "Test 123";
             // 
-            // testLogToolStripMenuItem
-            // 
-            this.testLogToolStripMenuItem.Name = "testLogToolStripMenuItem";
-            this.testLogToolStripMenuItem.Size = new System.Drawing.Size(66, 21);
-            this.testLogToolStripMenuItem.Text = "TestLog";
-            this.testLogToolStripMenuItem.Click += new System.EventHandler(this.testLogToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -233,7 +249,7 @@ namespace EarthquakeDispatch
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "ArcEngine Controls Application";
+            this.Text = "应急物资供应计算程序";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -265,9 +281,11 @@ namespace EarthquakeDispatch
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel statusBarXY;
-        private System.Windows.Forms.ToolStripMenuItem wordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem testLogToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 测试导出报告ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 饮用水供给ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 方便食品供给ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 救灾帐篷供给ToolStripMenuItem;
     }
 }
 

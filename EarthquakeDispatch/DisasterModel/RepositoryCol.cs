@@ -9,6 +9,11 @@ namespace DisasterModel
     class RepositoryCol
     {
         List<Repository> _repositories = null;
+
+        List<int> _reposWithNoWater = new List<int>();
+        List<int> _reposWithNoFood = new List<int>();
+        List<int> _reposWithNoTent = new List<int>();
+
         private IFeatureClass _fc;
         public static string TentField = "帐篷";
         public static string FoodField = "食品";
@@ -53,8 +58,24 @@ namespace DisasterModel
         internal ESRI.ArcGIS.Geodatabase.IQueryFilter ValidWaterFilter()
         {
             IQueryFilter filter = new QueryFilterClass();
-            filter.WhereClause = string.Format("{0} > 0", WaterField);
+            //filter.WhereClause = string.Format("{0} > 0", WaterField);
+            filter.WhereClause = ExcludeIDs(_reposWithNoWater);
             return filter;
+        }
+
+        private string ExcludeIDs(List<int> ids)
+        {
+            if (ids.Count == 0)
+            {
+                return "";
+            }
+
+            StringBuilder sb = new StringBuilder(_fc.OIDFieldName + " not in (");
+            foreach (var id in ids)
+            {
+                sb.Append(id.ToString() + ",");
+            }
+            return sb.ToString().TrimEnd(',') + ")";
         }
 
         public ESRI.ArcGIS.Geodatabase.IFeatureClass FeatureClass
@@ -82,7 +103,12 @@ namespace DisasterModel
         internal void SupplyWater(Repository repo, double p)
         {
             repo.Water -= p;
-            UpdateWater(repo.ID, p);
+
+            if (repo.Water <= 0)
+            {
+                _reposWithNoWater.Add(repo.ID);
+            }
+            //UpdateWater(repo.ID, p);
         }
 
         private void UpdateWater(int oid, double amount)

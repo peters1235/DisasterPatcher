@@ -95,7 +95,7 @@ namespace DisasterModel
             INetworkLayer networkLayer = new NetworkLayerClass();
             networkLayer.NetworkDataset = _networkDataset;
             var layer = networkLayer as ILayer;
-            layer.Name = "Network Dataset";
+            layer.Name = "路网";
             return layer;
         }
 

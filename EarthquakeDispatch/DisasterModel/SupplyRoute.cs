@@ -7,7 +7,7 @@ using ESRI.ArcGIS.Geodatabase;
 
 namespace DisasterModel
 {
-    class SupplyRoute
+    public class SupplyRoute
     {
         public object Amount { get; set; }
         public object Resource { get; set; }
@@ -19,6 +19,7 @@ namespace DisasterModel
         public static string AmountField = "Amount";
         public static string RepoIDField = "RepoID";
         public static string UnitField = "Unit";
+        public static string IncidentIDField = "IncidentID";
 
 
         internal void SetMessagePara(string name, double amount, string unit)
@@ -27,5 +28,7 @@ namespace DisasterModel
             this.Amount = amount;
             this.Unit = unit;
         }
+
+        public int IncidentID { get; set; }
     }
 }

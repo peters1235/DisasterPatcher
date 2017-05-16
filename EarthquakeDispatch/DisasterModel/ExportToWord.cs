@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EarthquakeDispatch
+namespace DisasterModel
 {
-    class ExportToWord : IExportToWord
+    public class ExportToWord 
     {
         private WordOperation wordOp = null;
 
@@ -20,21 +20,17 @@ namespace EarthquakeDispatch
             {
                 throw new Exception("创建Word文档失败，请确认本机是否安装了Word!");
             }
-
-            
         }
 
         public void Finish()
         {
             wordOp.SaveAs();
-            wordOp.CloseWord(false);
+            wordOp.CloseWord(true);
         }
 
-        public void WriteWord()
+        public void WriteWord(string bookmark, string content, bool isPic)
         {
-            wordOp.InsertWhenBookMark("a", "Hello", false);
-            wordOp.InsertWhenBookMark("b", "World", false);
-            wordOp.InsertWhenBookMark("c", "My", false);
+            wordOp.InsertWhenBookMark(bookmark, content, isPic);
         }
     }
 }

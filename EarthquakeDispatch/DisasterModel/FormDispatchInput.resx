@@ -117,19 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DocName" xml:space="preserve">
-    <value>配送方案.doc</value>
-  </data>
-  <data name="ImgName" xml:space="preserve">
-    <value>配送方案.jpg</value>
-  </data>
-  <data name="MDBName" xml:space="preserve">
-    <value>result.mdb</value>
-  </data>
-  <data name="MxdName" xml:space="preserve">
-    <value>result.mxd</value>
-  </data>
-  <data name="RoutesClassName" xml:space="preserve">
-    <value>Routes</value>
-  </data>
+  <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

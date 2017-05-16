@@ -45,7 +45,7 @@ namespace DisasterModel
 
                 RefugeeSite site = new RefugeeSite()
                 {
-                    ID = row.OID,
+                    OID = row.OID,
                     Location = row.ShapeCopy as IPoint,
                     PeopleNeedTent = urgentPop,
                     Population = popu
@@ -83,7 +83,7 @@ namespace DisasterModel
         internal IQueryFilter SiteFilter(RefugeeSite site)
         {
             IQueryFilter filter = new QueryFilterClass();
-            filter.WhereClause = _fc.OIDFieldName + " = " + site.ID.ToString();
+            filter.WhereClause = _fc.OIDFieldName + " = " + site.OID.ToString();
             return filter;
         }
 
