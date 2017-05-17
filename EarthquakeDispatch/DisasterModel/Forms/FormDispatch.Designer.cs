@@ -1,6 +1,6 @@
 ﻿namespace DisasterModel
 {
-    partial class FormDispatchInput
+    partial class FormDispatch
     {
         /// <summary>
         /// Required designer variable.
@@ -30,8 +30,6 @@
         {
             this.txtEarthquakeName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.nmDaysInShort = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.txtFacilityLoc = new System.Windows.Forms.TextBox();
@@ -41,12 +39,15 @@
             this.label5 = new System.Windows.Forms.Label();
             this.dtEarthquakeDate = new System.Windows.Forms.DateTimePicker();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            ((System.ComponentModel.ISupportInitialize)(this.nmDaysInShort)).BeginInit();
+            this.label7 = new System.Windows.Forms.Label();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.txtOutputFolder = new System.Windows.Forms.TextBox();
+            this.paraPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // txtEarthquakeName
             // 
-            this.txtEarthquakeName.Location = new System.Drawing.Point(132, 35);
+            this.txtEarthquakeName.Location = new System.Drawing.Point(132, 15);
             this.txtEarthquakeName.Name = "txtEarthquakeName";
             this.txtEarthquakeName.Size = new System.Drawing.Size(262, 21);
             this.txtEarthquakeName.TabIndex = 0;
@@ -54,37 +55,16 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(61, 38);
+            this.label1.Location = new System.Drawing.Point(12, 18);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 1;
             this.label1.Text = "地震名称";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(61, 95);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "保障天数";
-            // 
-            // nmDaysInShort
-            // 
-            this.nmDaysInShort.Location = new System.Drawing.Point(132, 93);
-            this.nmDaysInShort.Name = "nmDaysInShort";
-            this.nmDaysInShort.Size = new System.Drawing.Size(262, 21);
-            this.nmDaysInShort.TabIndex = 2;
-            this.nmDaysInShort.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(25, 126);
+            this.label3.Location = new System.Drawing.Point(12, 74);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 12);
             this.label3.TabIndex = 1;
@@ -93,7 +73,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(25, 157);
+            this.label4.Location = new System.Drawing.Point(12, 105);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(89, 12);
             this.label4.TabIndex = 1;
@@ -101,7 +81,7 @@
             // 
             // txtFacilityLoc
             // 
-            this.txtFacilityLoc.Location = new System.Drawing.Point(132, 123);
+            this.txtFacilityLoc.Location = new System.Drawing.Point(132, 71);
             this.txtFacilityLoc.Name = "txtFacilityLoc";
             this.txtFacilityLoc.ReadOnly = true;
             this.txtFacilityLoc.Size = new System.Drawing.Size(262, 21);
@@ -110,7 +90,7 @@
             // 
             // txtIncidentLoc
             // 
-            this.txtIncidentLoc.Location = new System.Drawing.Point(132, 154);
+            this.txtIncidentLoc.Location = new System.Drawing.Point(132, 102);
             this.txtIncidentLoc.Name = "txtIncidentLoc";
             this.txtIncidentLoc.ReadOnly = true;
             this.txtIncidentLoc.Size = new System.Drawing.Size(262, 21);
@@ -119,7 +99,7 @@
             // 
             // btnCalculate
             // 
-            this.btnCalculate.Location = new System.Drawing.Point(210, 233);
+            this.btnCalculate.Location = new System.Drawing.Point(205, 320);
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.Size = new System.Drawing.Size(75, 23);
             this.btnCalculate.TabIndex = 3;
@@ -130,7 +110,7 @@
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(319, 233);
+            this.button1.Location = new System.Drawing.Point(319, 320);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 3;
@@ -140,7 +120,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(61, 68);
+            this.label5.Location = new System.Drawing.Point(12, 42);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 1;
@@ -148,7 +128,7 @@
             // 
             // dtEarthquakeDate
             // 
-            this.dtEarthquakeDate.Location = new System.Drawing.Point(132, 66);
+            this.dtEarthquakeDate.Location = new System.Drawing.Point(132, 42);
             this.dtEarthquakeDate.Name = "dtEarthquakeDate";
             this.dtEarthquakeDate.Size = new System.Drawing.Size(262, 21);
             this.dtEarthquakeDate.TabIndex = 4;
@@ -157,29 +137,54 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // FormDispatchInput
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 137);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 12);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "输出目录";
+            // 
+            // txtOutputFolder
+            // 
+            this.txtOutputFolder.Location = new System.Drawing.Point(132, 134);
+            this.txtOutputFolder.Name = "txtOutputFolder";
+            this.txtOutputFolder.ReadOnly = true;
+            this.txtOutputFolder.Size = new System.Drawing.Size(262, 21);
+            this.txtOutputFolder.TabIndex = 0;
+            this.txtOutputFolder.Click += new System.EventHandler(this.txtOutputFolder_Click);
+            // 
+            // paraPanel
+            // 
+            this.paraPanel.Location = new System.Drawing.Point(14, 171);
+            this.paraPanel.Name = "paraPanel";
+            this.paraPanel.Size = new System.Drawing.Size(382, 132);
+            this.paraPanel.TabIndex = 5;
+            // 
+            // FormDispatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(408, 314);
+            this.ClientSize = new System.Drawing.Size(408, 353);
+            this.Controls.Add(this.paraPanel);
             this.Controls.Add(this.dtEarthquakeDate);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnCalculate);
-            this.Controls.Add(this.nmDaysInShort);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtOutputFolder);
             this.Controls.Add(this.txtIncidentLoc);
             this.Controls.Add(this.txtFacilityLoc);
             this.Controls.Add(this.txtEarthquakeName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "FormDispatchInput";
+            this.Name = "FormDispatch";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "饮用水供给方案";
-            ((System.ComponentModel.ISupportInitialize)(this.nmDaysInShort)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -189,8 +194,6 @@
 
         private System.Windows.Forms.TextBox txtEarthquakeName;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown nmDaysInShort;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtFacilityLoc;
@@ -200,5 +203,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker dtEarthquakeDate;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.TextBox txtOutputFolder;
+        private System.Windows.Forms.Panel paraPanel;
     }
 }

@@ -15,15 +15,12 @@ namespace DisasterModel
 
         public int GetOccurMonth()
         {
-            return 1;
+            return DateTime.Month; 
         }
-
-        public int DaysInShort { get; set; }
 
         public Earthquake()
         {
-            DaysInShort = 10;
-            Name = "Earthquake";
+            Name = "";
         }
     }
 

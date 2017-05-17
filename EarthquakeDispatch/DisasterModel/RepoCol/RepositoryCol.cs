@@ -3,21 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.ADF;
 
 namespace DisasterModel
 {
-    class RepositoryCol
+    public class RepositoryCol
     {
         List<Repository> _repositories = null;
 
-        List<int> _reposWithNoWater = new List<int>();
-        List<int> _reposWithNoFood = new List<int>();
-        List<int> _reposWithNoTent = new List<int>();
+        List<int> _reposWithNoResource = new List<int>();
+
 
         private IFeatureClass _fc;
         public static string TentField = "帐篷";
         public static string FoodField = "食品";
         public static string WaterField = "饮用水";
+       
+        private string _resourceField;
+
+        internal void Setup(IFeatureClass fc, string resourceField)
+        {
+            this._fc = fc;
+            this._resourceField = resourceField;
+
+            _repositories = GetRepositories();
+        }
 
         public void Setup(IFeatureClass fc)
         {
@@ -28,38 +38,49 @@ namespace DisasterModel
         private List<Repository> GetRepositories()
         {
             _repositories = new List<Repository>();
-            IFeatureCursor cursor = _fc.Search(null, false);
-            IFeature f = cursor.NextFeature();
-
-            int idxFood = _fc.FindField(FoodField);
-            int idxTent = _fc.FindField(TentField);
-            int idxWater = _fc.FindField(WaterField);
-
-
-            while (f != null)
+            IFeatureCursor cursor = null;
+            try
             {
-                Repository repo = new Repository()
+
+
+                cursor = _fc.Search(null, false);
+                IFeature f = cursor.NextFeature();
+
+                int _idxResource = _fc.FindField(_resourceField);
+
+
+                while (f != null)
                 {
-                    ID = f.OID,
-                    Food = double.Parse(f.get_Value(idxFood).ToString()),
-                    Tents = double.Parse(f.get_Value(idxTent).ToString()),
-                    Water = double.Parse(f.get_Value(idxWater).ToString())
-                };
-                _repositories.Add(repo);
+                    Repository repo = new Repository()
+                    {
+                        ID = f.OID,
+                        Remain = int.Parse(f.get_Value(_idxResource).ToString())
+                    };
+                    _repositories.Add(repo);
 
-                f = cursor.NextFeature();
+                    f = cursor.NextFeature();
 
+                }
+
+                return _repositories;
             }
-
-            return _repositories;
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+                return null;
+            }
+            finally
+            {
+                ComReleaser.ReleaseCOMObject(cursor);
+            }
         }
 
 
-        internal ESRI.ArcGIS.Geodatabase.IQueryFilter ValidWaterFilter()
+        internal ESRI.ArcGIS.Geodatabase.IQueryFilter ValidFilter()
         {
             IQueryFilter filter = new QueryFilterClass();
             //filter.WhereClause = string.Format("{0} > 0", WaterField);
-            filter.WhereClause = ExcludeIDs(_reposWithNoWater);
+            filter.WhereClause = ExcludeIDs(_reposWithNoResource);
             return filter;
         }
 
@@ -100,13 +121,13 @@ namespace DisasterModel
             return null;
         }
 
-        internal void SupplyWater(Repository repo, double p)
+        internal void SupplyResource(Repository repo, int p)
         {
-            repo.Water -= p;
+            repo.Remain -= p;
 
-            if (repo.Water <= 0)
+            if (repo.Remain <= 0)
             {
-                _reposWithNoWater.Add(repo.ID);
+                _reposWithNoResource.Add(repo.ID);
             }
             //UpdateWater(repo.ID, p);
         }
@@ -120,5 +141,8 @@ namespace DisasterModel
             f.set_Value(idxWater, oldValue - amount);
             f.Store();
         }
+
+
+
     }
 }

@@ -120,11 +120,36 @@
     <Compile Include="EnumResource.cs" />
     <Compile Include="ExportActiveView.cs" />
     <Compile Include="ExportToWord.cs" />
-    <Compile Include="FormDispatchInput.cs">
+    <Compile Include="Forms\FormDispatch.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormDispatchInput.Designer.cs">
-      <DependentUpon>FormDispatchInput.cs</DependentUpon>
+    <Compile Include="Forms\FormDispatch.Designer.cs">
+      <DependentUpon>FormDispatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormDispatchFood.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormDispatchWater.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormDispatchTents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UCTents.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SitesCol\RefugeeSiteFoodCol.cs" />
+    <Compile Include="Forms\UCFood.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\UCParas.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\UCParas.Designer.cs">
+      <DependentUpon>UCParas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UCWater.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="IExportToWord.cs" />
     <Compile Include="LogHelper.cs" />
@@ -136,11 +161,13 @@
     </Compile>
     <Compile Include="RoadNetwork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RefugeeSite.cs" />
-    <Compile Include="RefugeeSiteCol.cs" />
+    <Compile Include="Site\RefugeeSite.cs" />
+    <Compile Include="SitesCol\RefugeeSiteCol.cs" />
     <Compile Include="RegionCoefficient.cs" />
-    <Compile Include="Repository.cs" />
-    <Compile Include="RepositoryCol.cs" />
+    <Compile Include="Repo\Repository.cs" />
+    <Compile Include="RepoCol\RepositoryCol.cs" />
+    <Compile Include="SitesCol\RefugeeSiteTentCol.cs" />
+    <Compile Include="SitesCol\RefugeeSiteWaterCol.cs" />
     <Compile Include="SupplyNetwork.cs" />
     <Compile Include="SeasonCoefficient.cs" />
     <Compile Include="SupplyRoute.cs" />
@@ -154,8 +181,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FormDispatchInput.resx">
-      <DependentUpon>FormDispatchInput.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\FormDispatch.resx">
+      <DependentUpon>FormDispatch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UCFood.resx">
+      <DependentUpon>UCFood.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UCTents.resx">
+      <DependentUpon>UCTents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UCWater.resx">
+      <DependentUpon>UCWater.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -164,6 +200,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

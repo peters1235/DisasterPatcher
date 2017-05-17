@@ -11,7 +11,7 @@ namespace DisasterModel
 {
     public class Dispatcher
     {
-        Earthquake _quake = null;
+     
 
         string _facilityClassName = "物资贮备分布点";
         string _incidentClassName = "灾区位置分布点";
@@ -24,9 +24,10 @@ namespace DisasterModel
         RoadNetwork _roadNetwork = null;
 
         string templatePath = System.IO.Path.Combine(Application.StartupPath, "Template");
-        string outputPath = @"F:\17\private\Disaster\Data\output";
+        string _outputPath = @"F:\17\private\Disaster\Data\output";
         private IFeatureClass _outputFC;
 
+        
         internal bool Setup(Earthquake quake, string facilityData, string incidentData)
         {
             string networkWorkspace = System.IO.Path.Combine(Application.StartupPath,
@@ -38,7 +39,7 @@ namespace DisasterModel
             string regionClassName = "地区系数";
             string seasonClassName = "季节系数";
 
-            _quake = quake;
+            Earthquake = quake;
             if (!SetupOutputDirectory())
             {
                 System.Windows.Forms.MessageBox.Show("初始化输出目录失败");
@@ -52,15 +53,19 @@ namespace DisasterModel
             _incidentWorkspace = System.IO.Path.GetDirectoryName(incidentData);
             _incidentClassName = System.IO.Path.GetFileNameWithoutExtension(incidentData);
             ws = WorkspaceUtil.OpenShapeWorkspace(_incidentWorkspace);
-            _refugeSiteCol = GetRefugeeSiteCol(ws, _incidentClassName);
+            _siteFeatureClass = ws.OpenFeatureClass(_incidentClassName);
+
+           // _refugeSiteCol = GetRefugeeSiteCol(ws, _incidentClassName);
 
             _repoWorkspace = System.IO.Path.GetDirectoryName(facilityData);
             _facilityClassName = System.IO.Path.GetFileNameWithoutExtension(facilityData);
             ws = WorkspaceUtil.OpenShapeWorkspace(_repoWorkspace);
-            _repositoryCol = GetRepositoryCol(ws, _facilityClassName);
+            _repoFeatureClass = ws.OpenFeatureClass(_facilityClassName);
 
-            _roadNetwork = GetRoadNetwork(networkWorkspace, networkClassName);
-            _supplyNetwork = GetSupplyNetwork();
+           // _repositoryCol = GetRepositoryCol(ws, _facilityClassName);
+
+           _roadNetwork = GetRoadNetwork(networkWorkspace, networkClassName);
+           // _supplyNetwork = GetSupplyNetwork();
 
             return true;
         }
@@ -69,15 +74,15 @@ namespace DisasterModel
         {
             try
             {
-                if (System.IO.Directory.Exists(outputPath))
+                if (System.IO.Directory.Exists(_outputPath))
                 {
-                    System.IO.Directory.Delete(outputPath, true);
+                    System.IO.Directory.Delete(_outputPath, true);
                 }
-                while (!System.IO.Directory.Exists(outputPath))
+                while (!System.IO.Directory.Exists(_outputPath))
                 {
-                    System.IO.Directory.CreateDirectory(outputPath);
+                    System.IO.Directory.CreateDirectory(_outputPath);
                 }
-                string outputWorkspace = System.IO.Path.Combine(outputPath, DisasterModel.Properties.Resources.MDBName);
+                string outputWorkspace = System.IO.Path.Combine(_outputPath, DisasterModel.Properties.Resources.MDBName);
                 string templateMdb = System.IO.Path.Combine(templatePath, DisasterModel.Properties.Resources.MDBName);
                 System.IO.File.Copy(templateMdb, outputWorkspace);
 
@@ -85,9 +90,7 @@ namespace DisasterModel
                 string outDoc = GetMxdLoc();
                 System.IO.File.Copy(templateDoc, outDoc);
 
-                string templateReport = System.IO.Path.Combine(templatePath, DisasterModel.Properties.Resources.DocName);
-                string outReport = GetDocLoc();
-                System.IO.File.Copy(templateReport, outReport);
+               
 
                 this._outputFC = WorkspaceUtil.OpenMDBWorkspace(outputWorkspace).OpenFeatureClass(
                      DisasterModel.Properties.Resources.RoutesClassName);
@@ -102,16 +105,16 @@ namespace DisasterModel
 
         private string GetDocLoc()
         {
-            string outReport = System.IO.Path.Combine(outputPath, DisasterModel.Properties.Resources.DocName);
+            string outReport = System.IO.Path.Combine(_outputPath,_reportName+"配送方案.doc");
             return outReport;
         }
 
         private string GetMxdLoc()
         {
-            string outDoc = System.IO.Path.Combine(outputPath, DisasterModel.Properties.Resources.MxdName);
+            string outDoc = System.IO.Path.Combine(_outputPath, DisasterModel.Properties.Resources.MxdName);
             return outDoc;
         }
-
+        /*
         private RepositoryCol GetRepositoryCol(IFeatureWorkspace ws, string repoClassName)
         {
             RepositoryCol col = new RepositoryCol();
@@ -122,10 +125,10 @@ namespace DisasterModel
         private RefugeeSiteCol GetRefugeeSiteCol(IFeatureWorkspace ws, string siteClassName)
         {
             RefugeeSiteCol col = new RefugeeSiteCol();
-            col.Setup(ws.OpenFeatureClass(siteClassName), _quake, _region, _season);
+            //col.Setup(ws.OpenFeatureClass(siteClassName), _quake, _region, _season);
             return col;
         }
-
+        */
         private SeasonCoefficient GetSeasonCoefficient(IFeatureWorkspace ws, string seasonClassName)
         {
             return new SeasonCoefficient(ws.OpenFeatureClass(seasonClassName));
@@ -137,11 +140,6 @@ namespace DisasterModel
             return coe;
         }
 
-        private Earthquake GetEarthquake(string name, DateTime dateTime, int daysInShort)
-        {
-            Earthquake quake = new Earthquake() { Name = name, DateTime = dateTime, DaysInShort = daysInShort };
-            return quake;
-        }
 
         private RoadNetwork GetRoadNetwork(string wsPath, string dsName)
         {
@@ -160,41 +158,17 @@ namespace DisasterModel
 
         public void Dispatch(EnumResource enumResource)
         {
-            switch (enumResource)
+            foreach (var site in _refugeSiteCol.Sites)
             {
-                case EnumResource.Water:
-                    foreach (var site in _refugeSiteCol.Sites)
-                    {
-                        _supplyNetwork.SupplyWater(site);
-                    }
-                    break;
-                case EnumResource.Food:
-                    foreach (var site in _refugeSiteCol.Sites)
-                    {
-                        _supplyNetwork.SupplyFood(site);
-                    }
-                    break;
-                case EnumResource.Tent:
-                    foreach (var site in _refugeSiteCol.Sites)
-                    {
-                        _supplyNetwork.SupplyTents(site);
-                    }
-                    break;
-                case EnumResource.Electricity:
-                    break;
-                case EnumResource.FireFighter:
-                    break;
-                case EnumResource.Rescue:
-                    break;
-                default:
-                    break;
+                _supplyNetwork.SupplyResource(site);
             }
-
         }
 
         IMap _map = null;
         private string _incidentWorkspace;
         private string _repoWorkspace;
+        private IFeatureClass _siteFeatureClass;
+        private IFeatureClass _repoFeatureClass;
 
         public ESRI.ArcGIS.Carto.IMap GetMap()
         {
@@ -205,16 +179,11 @@ namespace DisasterModel
                 _map = mapDocu.Map[0];
 
                 IFeatureLayer incidentsLayer = FindLayer(_map, "灾区位置分布点");
-                incidentsLayer.FeatureClass = _refugeSiteCol.FeatureClass;
+                incidentsLayer.FeatureClass = this.SiteFeatureClass;
 
                 IFeatureLayer facilityLayer = FindLayer(_map, "物资贮备分布点");
-                facilityLayer.FeatureClass = this._repositoryCol.FeatureClass;
-
-                //test
-               // IGeoFeatureLayer geoLayer = FindLayer(_map, "Routes") as IGeoFeatureLayer;
-                //geoLayer.DisplayAnnotation = false;
-                //test
-
+                facilityLayer.FeatureClass = this.RepoFeatureClass;
+        
                 incidentsLayer.Name = _incidentClassName;
                 facilityLayer.Name = _facilityClassName;
 
@@ -225,6 +194,8 @@ namespace DisasterModel
             }
             return _map;
         }
+
+
 
         private IFeatureLayer FindLayer(IMap map, string layername)
         {
@@ -239,40 +210,85 @@ namespace DisasterModel
             return null;
         }
 
-        public string OutputFolder { get { return outputPath; } }
+        public string OutputFolder { get { return _outputPath; } set { _outputPath = value; } }
 
-        public void CreateReport(IActiveView view)
+        public bool CreateReport(IActiveView view)
         {
-            ExportActiveView export = new ExportActiveView();
-            export.ExportActiveViewParameterized(view, 300, 1, "JPEG", GetImageLoc(), false);
 
-            ExportToWord _errorExport = new ExportToWord();
-            string loc = GetDocLoc();
-            _errorExport.InitWord(loc);
+            try
+            {
+                ExportActiveView export = new ExportActiveView();
+                string imgName = System.IO.Path.GetTempFileName();
+                export.ExportActiveViewParameterized(view, 300, 1, "JPEG", imgName, false);
 
-            _errorExport.WriteWord("EarthquakeName", _quake.Name, false);
-            _errorExport.WriteWord("DispatchSchema", GetDispatchSchema(), false);
-            _errorExport.WriteWord("DispatchRoutes", GetImageLoc(), true);
-            _errorExport.Finish();
+                string templateReport = System.IO.Path.Combine(templatePath, DisasterModel.Properties.Resources.DocName);
+                string outReport = GetDocLoc();
+                System.IO.File.Copy(templateReport, outReport, true);
+
+                ExportToWord _errorExport = new ExportToWord();
+                _errorExport.InitWord(outReport);
+
+                _errorExport.WriteWord("EarthquakeName", Earthquake.Name, false);
+                _errorExport.WriteWord("DispatchSchema", GetDispatchSchema(), false);
+                _errorExport.WriteWord("DispatchRoutes", imgName, true);
+                _errorExport.Finish();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+                return false;
+            }
         }
 
         private string GetDispatchSchema()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (var route in _supplyNetwork.WaterRoutes)
+            foreach (var route in _resultRoutes)
             {
-                sb.Append(string.Format("从物资贮备分布点{0}运送{1}{2}{3}至灾区位置分布点{4}\r\n", route.RepoID, route.Resource, route.Amount, route.Unit, route.IncidentID));
+                sb.Append(string.Format("从{5}{0}运送{1}{2}{3}至{6}{4}\r\n", route.RepoID, route.Resource, route.Amount, route.Unit, route.IncidentID,_facilityClassName,_incidentClassName));
             }
             return sb.ToString();
-        }
+        } 
 
-        private string GetImageLoc()
+        public SeasonCoefficient Coe { get { return _season; }  }
+
+        public RegionCoefficient Region { get { return _region; } }
+
+        public IFeatureClass SiteFeatureClass { get { return _siteFeatureClass; }  }
+
+        internal RoadNetwork RoadNetwork { get { return _roadNetwork; } }
+
+        internal IFeatureClass GetRoutesClass()
         {
-            return System.IO.Path.Combine(outputPath, DisasterModel.Properties.Resources.ImgName);
+            return _outputFC;
         }
 
-        public string EarthquakeName { get; set; }
+        public IFeatureClass RepoFeatureClass { get { return _repoFeatureClass; } }
 
+        public void ToggleLabel(IMap map, bool visible)
+        {
+            IGeoFeatureLayer geoLayer = FindLayer(map, "Routes") as IGeoFeatureLayer;
+            geoLayer.DisplayAnnotation = visible;
+            
+        }
 
+        public string _reportName = "" ;
+        private List<SupplyRoute> _resultRoutes;
+
+        internal void SetReportName(RefugeeSiteCol siteCol)
+        {
+            if (siteCol != null && siteCol.Sites!= null && siteCol.Sites.Count > 0)
+            {
+                _reportName = siteCol.Sites[0].ResourceName();
+            }
+        }
+
+        internal void StoreResult(List<SupplyRoute> list)
+        {
+            this._resultRoutes = list; 
+        }
+
+        public Earthquake Earthquake { get; set; }
     }
 }

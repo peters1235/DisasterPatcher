@@ -15,33 +15,23 @@ namespace DisasterModel
         private RoadNetwork _roadNetwork;
         private IFeatureClass _outputFC;
 
-        List<SupplyRoute> _siteWaterRoutes = new List<SupplyRoute>();
+        List<SupplyRoute> _siteRoutes = new List<SupplyRoute>();
 
-        public List<SupplyRoute> WaterRoutes
+        public List<SupplyRoute> Routes
         {
-            get { return _siteWaterRoutes; }
+            get { return _siteRoutes; }
         }
 
-        public void SupplyTents(RefugeeSite site)
-        {
-            
-        }
-
-        public void SupplyFood(RefugeeSite site)
-        {
-           
-        }
-
-        public void SupplyWater(RefugeeSite site)
+        public void SupplyResource(RefugeeSite site)
         {
             do
             {
                 IFeatureClass facilityClass = _repositoryCol.FeatureClass;
-                IQueryFilter facilityFilter = _repositoryCol.ValidWaterFilter();
+                IQueryFilter facilityFilter = _repositoryCol.ValidFilter();
 
                 if (facilityClass.FeatureCount(facilityFilter) == 0)
                 {
-                    LogHelper.Error("没有足够的水资源");
+                    LogHelper.Error("没有足够的" + site.ResourceName());
                     break;
                 }
                 _roadNetwork.SetFacilities(facilityClass, facilityFilter);
@@ -53,26 +43,26 @@ namespace DisasterModel
                 SupplyRoute route = _roadNetwork.FindRoute();
 
                 Repository repo = _repositoryCol.FindRepoByID(route.RepoID);
-                double waterAmount = 0;
-                if (repo.Water >= site.WaterInNeed)
+                int amount = 0;
+                if (repo.Remain >= site.ResourceInNeed)
                 {
-                    waterAmount = site.WaterInNeed;
+                    amount = site.ResourceInNeed;
                 }
                 else
                 {
-                    waterAmount = repo.Water;
+                    amount = repo.Remain;
                 }
 
-                _repositoryCol.SupplyWater(repo, waterAmount);
-                _refugeSiteCol.ReplenishWater(site, waterAmount);
+                _repositoryCol.SupplyResource(repo, amount);
+                _refugeSiteCol.ReplenishResource(site, amount);
 
-                route.SetMessagePara("饮用水", waterAmount, "L");
+                route.SetMessagePara(site.ResourceName(), amount, site.ResourceUnit());
                 route.IncidentID = site.OID ;
 
                 AddRouteFeature(route);
-                _siteWaterRoutes.Add(route);
+                _siteRoutes.Add(route);
             }
-            while (site.WaterInNeed > 0);
+            while (site.ResourceInNeed > 0);
         }
 
         private void AddRouteFeature(SupplyRoute route)
@@ -95,12 +85,7 @@ namespace DisasterModel
             f.Store();
         }
 
-        internal void SupplyRefugeeSite(RefugeeSite site)
-        {
-            SupplyWater(site);
-            SupplyFood(site);
-            SupplyTents(site);
-        }
+       
 
         internal void SetLocations(RefugeeSiteCol _refugeSiteCol, RepositoryCol _repositoryCol, RoadNetwork _roadNetwork)
         {

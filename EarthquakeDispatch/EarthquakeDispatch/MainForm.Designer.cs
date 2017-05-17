@@ -47,6 +47,8 @@ namespace EarthquakeDispatch
             this.方便食品供给ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.救灾帐篷供给ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.测试导出报告ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.带标注ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.不带标注ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.axMapControl1 = new ESRI.ArcGIS.Controls.AxMapControl();
             this.axToolbarControl1 = new ESRI.ArcGIS.Controls.AxToolbarControl();
             this.axTOCControl1 = new ESRI.ArcGIS.Controls.AxTOCControl();
@@ -156,18 +158,38 @@ namespace EarthquakeDispatch
             this.方便食品供给ToolStripMenuItem.Name = "方便食品供给ToolStripMenuItem";
             this.方便食品供给ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.方便食品供给ToolStripMenuItem.Text = "方便食品供给";
+            this.方便食品供给ToolStripMenuItem.Click += new System.EventHandler(this.方便食品供给ToolStripMenuItem_Click);
             // 
             // 救灾帐篷供给ToolStripMenuItem
             // 
             this.救灾帐篷供给ToolStripMenuItem.Name = "救灾帐篷供给ToolStripMenuItem";
             this.救灾帐篷供给ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.救灾帐篷供给ToolStripMenuItem.Text = "救灾帐篷供给";
+            this.救灾帐篷供给ToolStripMenuItem.Click += new System.EventHandler(this.救灾帐篷供给ToolStripMenuItem_Click);
             // 
             // 测试导出报告ToolStripMenuItem
             // 
+            this.测试导出报告ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.带标注ToolStripMenuItem,
+            this.不带标注ToolStripMenuItem});
             this.测试导出报告ToolStripMenuItem.Name = "测试导出报告ToolStripMenuItem";
             this.测试导出报告ToolStripMenuItem.Size = new System.Drawing.Size(92, 21);
             this.测试导出报告ToolStripMenuItem.Text = "导出配送报告";
+            this.测试导出报告ToolStripMenuItem.Click += new System.EventHandler(this.测试导出报告ToolStripMenuItem_Click);
+            // 
+            // 带标注ToolStripMenuItem
+            // 
+            this.带标注ToolStripMenuItem.Name = "带标注ToolStripMenuItem";
+            this.带标注ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.带标注ToolStripMenuItem.Text = "带标注";
+            this.带标注ToolStripMenuItem.Click += new System.EventHandler(this.带标注ToolStripMenuItem_Click);
+            // 
+            // 不带标注ToolStripMenuItem
+            // 
+            this.不带标注ToolStripMenuItem.Name = "不带标注ToolStripMenuItem";
+            this.不带标注ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.不带标注ToolStripMenuItem.Text = "不带标注";
+            this.不带标注ToolStripMenuItem.Click += new System.EventHandler(this.不带标注ToolStripMenuItem_Click);
             // 
             // axMapControl1
             // 
@@ -286,6 +308,8 @@ namespace EarthquakeDispatch
         private System.Windows.Forms.ToolStripMenuItem 饮用水供给ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 方便食品供给ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 救灾帐篷供给ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 带标注ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 不带标注ToolStripMenuItem;
     }
 }
 
